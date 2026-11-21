@@ -25,7 +25,15 @@ replay_pid*
 
 # IntelliJ IDEA
 .idea/**
+!.idea/runConfigurations
+!.idea/runConfigurations/**
 !.idea/palantir-java-format.xml
+*.iws
+*.iml
+*.ipr
 
 # Target directory
 target/
+
+# Mac
+.DS_Store
