@@ -16,7 +16,8 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @JsonRootName("User")
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonPropertyOrder({"version", "createdBy", "createdDate", "lastModifiedBy", "lastModifiedDate", "firstName", "lastName"})
+@JsonPropertyOrder({"version", "createdBy", "createdDate", "lastModifiedBy", "lastModifiedDate", "firstName", "lastName"
+})
 public class User extends AuditableEntity {
     @JsonProperty("firstName")
     private String firstName;

@@ -18,14 +18,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public abstract class BaseJsonTests<T> {
     public static final TimeZone TEST_TIME_ZONE = TimeZone.getTimeZone("America/New_York");
-    public static final ObjectMapper OBJECT_MAPPER = buildTestMapper(JsonMapper.builder());
+    public static final ObjectMapper OBJECT_MAPPER =
+            new ObjectMapper().registerModule(new JavaTimeModule()).setTimeZone(TEST_TIME_ZONE);
+    public static final ObjectMapper CUSTOM_OBJECT_MAPPER = buildCustomMapper(JsonMapper.builder());
 
     // The POJO annotations must preserve the wire format even with these mapper defaults.
-    static <M extends ObjectMapper> M buildTestMapper(MapperBuilder<M, ?> builder) {
+    static <M extends ObjectMapper> M buildCustomMapper(MapperBuilder<M, ?> builder) {
         return builder.addModule(new JavaTimeModule())
                 .defaultTimeZone(TEST_TIME_ZONE)
                 .propertyNamingStrategy(PropertyNamingStrategies.UPPER_SNAKE_CASE)
-                .defaultPropertyInclusion(JsonInclude.Value.construct(JsonInclude.Include.ALWAYS, JsonInclude.Include.ALWAYS))
+                .defaultPropertyInclusion(
+                        JsonInclude.Value.construct(JsonInclude.Include.ALWAYS, JsonInclude.Include.ALWAYS))
                 .defaultSetterInfo(JsonSetter.Value.forValueNulls(Nulls.SKIP))
                 .enable(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY)
                 .enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
@@ -53,6 +56,17 @@ public abstract class BaseJsonTests<T> {
     void testJsonDeserialization() throws Exception {
         String json = getExpectedJson();
         T object = OBJECT_MAPPER.readValue(json, getObjectClass());
+        assertObject(object);
+    }
+
+    @Test
+    void testJsonSerializationWithCustomMapper() throws Exception {
+        assertEquals(getExpectedJson(), CUSTOM_OBJECT_MAPPER.writeValueAsString(createObject()));
+    }
+
+    @Test
+    void testJsonDeserializationWithCustomMapper() throws Exception {
+        T object = CUSTOM_OBJECT_MAPPER.readValue(getExpectedJson(), getObjectClass());
         assertObject(object);
     }
 }
