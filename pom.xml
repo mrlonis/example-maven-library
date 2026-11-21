@@ -42,6 +42,16 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
+      <dependency>
+        <groupId>org.checkerframework</groupId>
+        <artifactId>checker</artifactId>
+        <version>${org.checkerframework.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>${lombok.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
   <dependencies>
@@ -61,14 +71,12 @@
     <dependency>
       <groupId>org.checkerframework</groupId>
       <artifactId>checker</artifactId>
-      <version>${org.checkerframework.version}</version>
       <scope>provided</scope>
       <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>${lombok.version}</version>
       <scope>provided</scope>
       <optional>true</optional>
     </dependency>
@@ -114,6 +122,16 @@
           <source>${java.version}</source>
           <target>${java.version}</target>
           <release>${java.version}</release>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+            </path>
+            <path>
+              <groupId>org.checkerframework</groupId>
+              <artifactId>checker</artifactId>
+            </path>
+          </annotationProcessorPaths>
           <compilerArgs>
             <arg>-Xlint:all</arg>
           </compilerArgs>
