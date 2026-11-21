@@ -70,6 +70,46 @@ public class UserTests extends BaseXmlTests<User> {
         return User.class;
     }
 
+    @Test
+    void omitsNullPropertiesAndKeepsNonNullValuesInOrder() throws Exception {
+        User user = User.builder()
+                .createdDate(null)
+                .lastModifiedDate(null)
+                .lastModifiedBy(LAST_MODIFIED_BY)
+                .firstName("")
+                .build();
+        assertEquals(
+                "{\"version\":1,\"lastModifiedBy\":\"editor\",\"firstName\":\"\"}",
+                OBJECT_MAPPER.writeValueAsString(user));
+        assertEquals(
+                "<User><version>1</version><lastModifiedBy>editor</lastModifiedBy><firstName></firstName></User>",
+                XML_MAPPER.writeValueAsString(user));
+    }
+
+    @Test
+    void ignoresUnknownPropertiesAndKeepsAuditDefaults() throws Exception {
+        String json = "{\"future\":{\"value\":1},\"firstName\":\"John\"}";
+        String xml = "<User><future><value>1</value></future><firstName>John</firstName></User>";
+        for (User user : new User[] {OBJECT_MAPPER.readValue(json, User.class), XML_MAPPER.readValue(xml, User.class)}) {
+            assertEquals(FIRST_NAME, user.getFirstName());
+            assertEquals(1, user.getVersion());
+            assertNotNull(user.getCreatedDate());
+            assertNotNull(user.getLastModifiedDate());
+        }
+    }
+
+    @Test
+    void preservesExplicitNullsForAuditFields() throws Exception {
+        String json = "{\"version\":null,\"createdDate\":null,\"lastModifiedDate\":null}";
+        String xml = "<User xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"
+                + "<version xsi:nil=\"true\"/><createdDate xsi:nil=\"true\"/><lastModifiedDate xsi:nil=\"true\"/></User>";
+        for (User user : new User[] {OBJECT_MAPPER.readValue(json, User.class), XML_MAPPER.readValue(xml, User.class)}) {
+            assertEquals(0, user.getVersion());
+            assertNull(user.getCreatedDate());
+            assertNull(user.getLastModifiedDate());
+        }
+    }
+
     @ParameterizedTest
     @CsvSource(
             delimiter = '|',

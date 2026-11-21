@@ -1,14 +1,12 @@
 package com.mrlonis.test;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public abstract class BaseXmlTests<T> extends BaseJsonTests<T> {
-    public static final XmlMapper XML_MAPPER =
-            (XmlMapper) new XmlMapper().registerModule(new JavaTimeModule()).setTimeZone(TEST_TIME_ZONE);
+    public static final XmlMapper XML_MAPPER = buildTestMapper(XmlMapper.builder());
 
     public abstract String getExpectedXml();
 
