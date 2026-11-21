@@ -2,7 +2,6 @@ package com.mrlonis.dto;
 
 import com.mrlonis.test.BaseXmlTests;
 
-import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
@@ -14,23 +13,23 @@ public class UserTests extends BaseXmlTests<User> {
     private static final String LAST_NAME = "Doe";
     private static final long VERSION = 2;
     private static final String CREATED_BY = "creator";
-    private static final ZonedDateTime CREATED_DATE = Instant.ofEpochSecond(1).atZone(ZoneOffset.UTC);
+    private static final ZonedDateTime CREATED_DATE = ZonedDateTime.of(2026, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
     private static final String LAST_MODIFIED_BY = "editor";
-    private static final ZonedDateTime MODIFIED_DATE = Instant.ofEpochSecond(2).atZone(ZoneOffset.UTC);
+    private static final ZonedDateTime MODIFIED_DATE = ZonedDateTime.of(2026, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
 
     @Override
     public String getExpectedXml() {
         return "<User><version>" + VERSION + "</version><createdBy>" + CREATED_BY
-                + "</createdBy><createdDate>1.000000000</createdDate>"
+                + "</createdBy><createdDate>" + CREATED_DATE + "</createdDate>"
                 + "<lastModifiedBy>" + LAST_MODIFIED_BY
-                + "</lastModifiedBy><lastModifiedDate>2.000000000</lastModifiedDate>"
+                + "</lastModifiedBy><lastModifiedDate>" + MODIFIED_DATE + "</lastModifiedDate>"
                 + "<firstName>" + FIRST_NAME + "</firstName><lastName>" + LAST_NAME + "</lastName></User>";
     }
 
     @Override
     public String getExpectedJson() {
-        return "{\"version\":" + VERSION + ",\"createdBy\":\"" + CREATED_BY + "\",\"createdDate\":1.000000000,"
-                + "\"lastModifiedBy\":\"" + LAST_MODIFIED_BY + "\",\"lastModifiedDate\":2.000000000,"
+        return "{\"version\":" + VERSION + ",\"createdBy\":\"" + CREATED_BY + "\",\"createdDate\":" + CREATED_DATE + ","
+                + "\"lastModifiedBy\":\"" + LAST_MODIFIED_BY + "\",\"lastModifiedDate\":" + MODIFIED_DATE + ","
                 + "\"firstName\":\"" + FIRST_NAME + "\",\"lastName\":\"" + LAST_NAME + "\"}";
     }
 
