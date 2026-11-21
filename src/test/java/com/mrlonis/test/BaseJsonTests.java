@@ -4,10 +4,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
 
+import java.util.TimeZone;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public abstract class BaseJsonTests<T> {
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper().registerModule(new JavaTimeModule());
+    public static final TimeZone TEST_TIME_ZONE = TimeZone.getTimeZone("America/New_York");
+    public static final ObjectMapper OBJECT_MAPPER =
+            new ObjectMapper().registerModule(new JavaTimeModule()).setTimeZone(TEST_TIME_ZONE);
 
     public abstract String getExpectedJson();
 

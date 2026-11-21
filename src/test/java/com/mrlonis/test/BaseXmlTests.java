@@ -7,7 +7,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public abstract class BaseXmlTests<T> extends BaseJsonTests<T> {
-    private static final XmlMapper XML_MAPPER = (XmlMapper) new XmlMapper().registerModule(new JavaTimeModule());
+    public static final XmlMapper XML_MAPPER =
+            (XmlMapper) new XmlMapper().registerModule(new JavaTimeModule()).setTimeZone(TEST_TIME_ZONE);
 
     public abstract String getExpectedXml();
 
