@@ -28,8 +28,8 @@ public class UserTests extends BaseXmlTests<User> {
 
     @Override
     public String getExpectedJson() {
-        return "{\"version\":" + VERSION + ",\"createdBy\":\"" + CREATED_BY + "\",\"createdDate\":" + CREATED_DATE + ","
-                + "\"lastModifiedBy\":\"" + LAST_MODIFIED_BY + "\",\"lastModifiedDate\":" + MODIFIED_DATE + ","
+        return "{\"version\":" + VERSION + ",\"createdBy\":\"" + CREATED_BY + "\",\"createdDate\":\"" + CREATED_DATE + "\","
+                + "\"lastModifiedBy\":\"" + LAST_MODIFIED_BY + "\",\"lastModifiedDate\":\"" + MODIFIED_DATE + "\","
                 + "\"firstName\":\"" + FIRST_NAME + "\",\"lastName\":\"" + LAST_NAME + "\"}";
     }
 
@@ -51,9 +51,9 @@ public class UserTests extends BaseXmlTests<User> {
         assertNotNull(object);
         assertEquals(VERSION, object.getVersion());
         assertEquals(CREATED_BY, object.getCreatedBy());
-        assertEquals(CREATED_DATE.toInstant(), object.getCreatedDate().toInstant());
+        assertEquals(CREATED_DATE, object.getCreatedDate());
         assertEquals(LAST_MODIFIED_BY, object.getLastModifiedBy());
-        assertEquals(MODIFIED_DATE.toInstant(), object.getLastModifiedDate().toInstant());
+        assertEquals(MODIFIED_DATE, object.getLastModifiedDate());
         assertEquals(FIRST_NAME, object.getFirstName());
         assertEquals(LAST_NAME, object.getLastName());
     }
