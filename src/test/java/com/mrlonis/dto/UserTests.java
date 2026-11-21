@@ -20,8 +20,10 @@ public class UserTests extends BaseXmlTests<User> {
 
     @Override
     public String getExpectedXml() {
-        return "<User><version>" + VERSION + "</version><createdBy>" + CREATED_BY + "</createdBy><createdDate>1.000000000</createdDate>"
-                + "<lastModifiedBy>" + LAST_MODIFIED_BY + "</lastModifiedBy><lastModifiedDate>2.000000000</lastModifiedDate>"
+        return "<User><version>" + VERSION + "</version><createdBy>" + CREATED_BY
+                + "</createdBy><createdDate>1.000000000</createdDate>"
+                + "<lastModifiedBy>" + LAST_MODIFIED_BY
+                + "</lastModifiedBy><lastModifiedDate>2.000000000</lastModifiedDate>"
                 + "<firstName>" + FIRST_NAME + "</firstName><lastName>" + LAST_NAME + "</lastName></User>";
     }
 
