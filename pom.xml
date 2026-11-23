@@ -7,6 +7,7 @@
   <name>example-maven-library</name>
   <description>Example Maven Library</description>
   <properties>
+    <cleanthat.version>2.26</cleanthat.version>
     <jackson-bom.version>2.23.0</jackson-bom.version>
     <jacoco-maven-plugin.version>0.8.16</jacoco-maven-plugin.version>
     <java.version>1.8</java.version>
@@ -21,10 +22,12 @@
     <maven-source-plugin.version>3.4.0</maven-source-plugin.version>
     <maven-surefire-plugin.version>3.6.1</maven-surefire-plugin.version>
     <org.checkerframework.version>3.55.1</org.checkerframework.version>
+    <palantir-java-format.version>2.103.0</palantir-java-format.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <sortpom-maven-plugin.version>3.0.1</sortpom-maven-plugin.version>
-    <versions-maven-plugin.version>2.25.2</versions-maven-plugin.version>
+    <spotless-maven-plugin.version>3.12.0</spotless-maven-plugin.version>
+    <versions-maven-plugin.version>2.25.3</versions-maven-plugin.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -41,6 +44,16 @@
         <version>${junit-bom.version}</version>
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.palantir.javaformat</groupId>
+        <artifactId>palantir-java-format</artifactId>
+        <version>${palantir-java-format.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.github.solven-eu.cleanthat</groupId>
+        <artifactId>spotless</artifactId>
+        <version>${cleanthat.version}</version>
       </dependency>
       <dependency>
         <groupId>org.checkerframework</groupId>
@@ -87,6 +100,15 @@
     </dependency>
   </dependencies>
   <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>com.diffplug.spotless</groupId>
+          <artifactId>spotless-maven-plugin</artifactId>
+          <version>${spotless-maven-plugin.version}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>com.github.ekryd.sortpom</groupId>
@@ -300,4 +322,190 @@
     <url>https://github.com/mrlonis/example-maven-library</url>
     <tag>HEAD</tag>
   </scm>
+  <profiles>
+    <profile>
+      <id>spotless</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.diffplug.spotless</groupId>
+            <artifactId>spotless-maven-plugin</artifactId>
+            <configuration>
+              <formats>
+                <format>
+                  <includes>
+                    <include>.mvn/wrapper/maven-wrapper.properties</include>
+                    <include>.gitattributes</include>
+                    <include>.gitignore</include>
+                    <include>.java-version</include>
+                    <include>lombok.config</include>
+                    <include>mvnw</include>
+                  </includes>
+                  <trimTrailingWhitespace/>
+                  <endWithNewline/>
+                </format>
+                <format>
+                  <includes>
+                    <include>mvnw.cmd</include>
+                  </includes>
+                  <trimTrailingWhitespace/>
+                  <endWithNewline/>
+                </format>
+                <format>
+                  <includes>
+                    <include>**/*.json</include>
+                    <include>**/*.xml</include>
+                    <include>**/*.yaml</include>
+                    <include>**/*.yml</include>
+                  </includes>
+                  <excludes>
+                    <exclude>.idea/**/*</exclude>
+                    <exclude>target/**/*</exclude>
+                    <exclude>pom.xml</exclude>
+                  </excludes>
+                  <prettier>
+                    <npmInstallCache>true</npmInstallCache>
+                    <devDependencyProperties>
+                      <property>
+                        <name>prettier</name>
+                        <value>^3</value>
+                      </property>
+                      <property>
+                        <name>@prettier/plugin-xml</name>
+                        <value>^3</value>
+                      </property>
+                    </devDependencyProperties>
+                    <config>
+                      <printWidth>120</printWidth>
+                      <xmlSelfClosingSpace>false</xmlSelfClosingSpace>
+                      <xmlSortAttributesByKey>true</xmlSortAttributesByKey>
+                      <xmlWhitespaceSensitivity>strict</xmlWhitespaceSensitivity>
+                      <plugins>@prettier/plugin-xml</plugins>
+                    </config>
+                  </prettier>
+                  <trimTrailingWhitespace/>
+                  <endWithNewline/>
+                </format>
+              </formats>
+              <java>
+                <cleanthat>
+                  <version>${cleanthat.version}</version>
+                  <mutators>
+                    <mutator>SafeAndConsensual</mutator>
+                  </mutators>
+                </cleanthat>
+                <palantirJavaFormat>
+                  <version>${palantir-java-format.version}</version>
+                  <style>PALANTIR</style>
+                  <formatJavadoc>true</formatJavadoc>
+                </palantirJavaFormat>
+                <removeUnusedImports/>
+                <importOrder/>
+                <trimTrailingWhitespace/>
+                <endWithNewline/>
+              </java>
+              <pom>
+                <includes>
+                  <include>pom.xml</include>
+                </includes>
+                <sortPom>
+                  <createBackupFile>false</createBackupFile>
+                  <encoding>UTF-8</encoding>
+                  <expandEmptyElements>false</expandEmptyElements>
+                  <keepBlankLines>false</keepBlankLines>
+                  <lineSeparator>\n</lineSeparator>
+                  <nrOfIndentSpace>2</nrOfIndentSpace>
+                  <predefinedSortOrder>custom_1</predefinedSortOrder>
+                  <sortDependencies>scope,groupId,artifactId</sortDependencies>
+                  <sortDependencyExclusions>groupId,artifactId</sortDependencyExclusions>
+                  <sortPlugins>groupId,artifactId</sortPlugins>
+                  <sortProperties>true</sortProperties>
+                  <spaceBeforeCloseEmptyElement>false</spaceBeforeCloseEmptyElement>
+                </sortPom>
+                <trimTrailingWhitespace/>
+                <endWithNewline/>
+              </pom>
+              <markdown>
+                <includes>
+                  <include>**/*.md</include>
+                </includes>
+                <excludes>
+                  <exclude>target/**/*.md</exclude>
+                </excludes>
+                <flexmark/>
+                <trimTrailingWhitespace/>
+                <endWithNewline/>
+              </markdown>
+              <sql>
+                <includes>
+                  <include>**/*.sql</include>
+                </includes>
+                <excludes>
+                  <exclude>.idea/**/*</exclude>
+                  <exclude>target/**/*</exclude>
+                </excludes>
+                <prettier>
+                  <npmInstallCache>true</npmInstallCache>
+                  <devDependencyProperties>
+                    <property>
+                      <name>prettier</name>
+                      <value>^3</value>
+                    </property>
+                    <property>
+                      <name>prettier-plugin-sql</name>
+                      <value>~0.20</value>
+                    </property>
+                  </devDependencyProperties>
+                  <config>
+                    <printWidth>120</printWidth>
+                    <plugins>prettier-plugin-sql</plugins>
+                  </config>
+                </prettier>
+              </sql>
+            </configuration>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>check</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-enforcer-plugin</artifactId>
+            <version>${maven-enforcer-plugin.version}</version>
+            <executions>
+              <execution>
+                <id>enforce-java</id>
+                <goals>
+                  <goal>enforce</goal>
+                </goals>
+                <configuration>
+                  <rules>
+                    <requireJavaVersion>
+                      <version>17</version>
+                    </requireJavaVersion>
+                  </rules>
+                </configuration>
+              </execution>
+              <execution>
+                <id>enforce-maven</id>
+                <goals>
+                  <goal>enforce</goal>
+                </goals>
+                <configuration>
+                  <rules>
+                    <requireMavenVersion>
+                      <version>3.8</version>
+                    </requireMavenVersion>
+                  </rules>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
