@@ -11,6 +11,7 @@
           </option>
           <option name="goals">
             <list>
+              <option value="enforcer:enforce" />
               <option value="spotless:apply" />
               <option value="-P" />
               <option value="spotless" />
