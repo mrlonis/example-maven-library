@@ -1,10 +1,10 @@
 package com.mrlonis;
 
-import org.junit.jupiter.api.Test;
-
 import static com.mrlonis.test.BaseJsonTests.CUSTOM_OBJECT_MAPPER;
 import static com.mrlonis.test.BaseXmlTests.CUSTOM_XML_MAPPER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
 
 public class ExampleTest {
     @Test

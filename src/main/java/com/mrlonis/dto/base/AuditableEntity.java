@@ -10,12 +10,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.mrlonis.jackson.ZonedDateTimeDeserializer;
 import com.mrlonis.jackson.ZonedDateTimeSerializer;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import lombok.Builder;
 import lombok.Data;
 import lombok.SuperBuilder;
-
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 
 @Data
 @SuperBuilder

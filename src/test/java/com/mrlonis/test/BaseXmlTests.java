@@ -1,10 +1,10 @@
 package com.mrlonis.test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public abstract class BaseXmlTests<T> extends BaseJsonTests<T> {
     public static final XmlMapper XML_MAPPER =
