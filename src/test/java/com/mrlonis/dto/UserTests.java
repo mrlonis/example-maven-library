@@ -17,20 +17,20 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 public class UserTests extends BaseXmlTests<User> {
-    private static final String FIRST_NAME = "John";
-    private static final String LAST_NAME = "Doe";
     private static final long VERSION = 2;
     private static final String CREATED_BY = "creator";
     private static final ZonedDateTime CREATED_DATE = ZonedDateTime.of(2026, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
     private static final String LAST_MODIFIED_BY = "editor";
-    private static final ZonedDateTime MODIFIED_DATE = ZonedDateTime.of(2026, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
+    private static final ZonedDateTime LAST_MODIFIED_DATE = ZonedDateTime.of(2026, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
+    private static final String FIRST_NAME = "John";
+    private static final String LAST_NAME = "Doe";
 
     @Override
     public String getExpectedXml() {
         return "<User><version>" + VERSION + "</version><createdBy>" + CREATED_BY
                 + "</createdBy><createdDate>" + CREATED_DATE + "</createdDate>"
                 + "<lastModifiedBy>" + LAST_MODIFIED_BY
-                + "</lastModifiedBy><lastModifiedDate>" + MODIFIED_DATE + "</lastModifiedDate>"
+                + "</lastModifiedBy><lastModifiedDate>" + LAST_MODIFIED_DATE + "</lastModifiedDate>"
                 + "<firstName>" + FIRST_NAME + "</firstName><lastName>" + LAST_NAME + "</lastName></User>";
     }
 
@@ -38,7 +38,7 @@ public class UserTests extends BaseXmlTests<User> {
     public String getExpectedJson() {
         return "{\"version\":" + VERSION + ",\"createdBy\":\"" + CREATED_BY + "\",\"createdDate\":\"" + CREATED_DATE
                 + "\","
-                + "\"lastModifiedBy\":\"" + LAST_MODIFIED_BY + "\",\"lastModifiedDate\":\"" + MODIFIED_DATE + "\","
+                + "\"lastModifiedBy\":\"" + LAST_MODIFIED_BY + "\",\"lastModifiedDate\":\"" + LAST_MODIFIED_DATE + "\","
                 + "\"firstName\":\"" + FIRST_NAME + "\",\"lastName\":\"" + LAST_NAME + "\"}";
     }
 
@@ -49,7 +49,7 @@ public class UserTests extends BaseXmlTests<User> {
                 .createdBy(CREATED_BY)
                 .createdDate(CREATED_DATE)
                 .lastModifiedBy(LAST_MODIFIED_BY)
-                .lastModifiedDate(MODIFIED_DATE)
+                .lastModifiedDate(LAST_MODIFIED_DATE)
                 .firstName(FIRST_NAME)
                 .lastName(LAST_NAME)
                 .build();
@@ -62,7 +62,7 @@ public class UserTests extends BaseXmlTests<User> {
         assertEquals(CREATED_BY, object.getCreatedBy());
         assertEquals(CREATED_DATE, object.getCreatedDate());
         assertEquals(LAST_MODIFIED_BY, object.getLastModifiedBy());
-        assertEquals(MODIFIED_DATE, object.getLastModifiedDate());
+        assertEquals(LAST_MODIFIED_DATE, object.getLastModifiedDate());
         assertEquals(FIRST_NAME, object.getFirstName());
         assertEquals(LAST_NAME, object.getLastName());
     }
