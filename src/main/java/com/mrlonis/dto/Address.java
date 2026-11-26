@@ -1,6 +1,7 @@
 package com.mrlonis.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.mrlonis.dto.base.AuditableEntity;
@@ -31,11 +32,24 @@ import lombok.extern.jackson.Jacksonized;
     "addressType"
 })
 public class Address extends AuditableEntity {
+    @JsonProperty("street1")
     private String street1;
+
+    @JsonProperty("street2")
     private String street2;
+
+    @JsonProperty("city")
     private String city;
+
+    @JsonProperty("state")
     private String state;
+
+    @JsonProperty("zipCode")
     private String zipCode;
+
+    @JsonProperty("country")
     private String country;
+
+    @JsonProperty("addressType")
     private AddressType addressType;
 }
