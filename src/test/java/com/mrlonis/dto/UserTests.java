@@ -8,48 +8,47 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.mrlonis.dto.base.AuditableEntityTests;
 import com.mrlonis.test.BaseXmlTests;
 import java.time.Instant;
-import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 public class UserTests extends BaseXmlTests<User> {
-    private static final long VERSION = 2;
-    private static final String CREATED_BY = "creator";
-    private static final ZonedDateTime CREATED_DATE = ZonedDateTime.of(2026, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
-    private static final String LAST_MODIFIED_BY = "editor";
-    private static final ZonedDateTime LAST_MODIFIED_DATE = ZonedDateTime.of(2026, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
     private static final String FIRST_NAME = "John";
     private static final String LAST_NAME = "Doe";
 
     @Override
     public String getExpectedXml() {
-        return "<User><version>" + VERSION + "</version><createdBy>" + CREATED_BY
-                + "</createdBy><createdDate>" + CREATED_DATE + "</createdDate>"
-                + "<lastModifiedBy>" + LAST_MODIFIED_BY
-                + "</lastModifiedBy><lastModifiedDate>" + LAST_MODIFIED_DATE + "</lastModifiedDate>"
+        return "<User><version>" + AuditableEntityTests.VERSION + "</version><createdBy>"
+                + AuditableEntityTests.CREATED_BY
+                + "</createdBy><createdDate>" + AuditableEntityTests.CREATED_DATE + "</createdDate>"
+                + "<lastModifiedBy>" + AuditableEntityTests.LAST_MODIFIED_BY
+                + "</lastModifiedBy><lastModifiedDate>" + AuditableEntityTests.LAST_MODIFIED_DATE
+                + "</lastModifiedDate>"
                 + "<firstName>" + FIRST_NAME + "</firstName><lastName>" + LAST_NAME + "</lastName></User>";
     }
 
     @Override
     public String getExpectedJson() {
-        return "{\"version\":" + VERSION + ",\"createdBy\":\"" + CREATED_BY + "\",\"createdDate\":\"" + CREATED_DATE
+        return "{\"version\":" + AuditableEntityTests.VERSION + ",\"createdBy\":\"" + AuditableEntityTests.CREATED_BY
+                + "\",\"createdDate\":\"" + AuditableEntityTests.CREATED_DATE
                 + "\","
-                + "\"lastModifiedBy\":\"" + LAST_MODIFIED_BY + "\",\"lastModifiedDate\":\"" + LAST_MODIFIED_DATE + "\","
+                + "\"lastModifiedBy\":\"" + AuditableEntityTests.LAST_MODIFIED_BY + "\",\"lastModifiedDate\":\""
+                + AuditableEntityTests.LAST_MODIFIED_DATE + "\","
                 + "\"firstName\":\"" + FIRST_NAME + "\",\"lastName\":\"" + LAST_NAME + "\"}";
     }
 
     @Override
     public User createObject() {
         return User.builder()
-                .version(VERSION)
-                .createdBy(CREATED_BY)
-                .createdDate(CREATED_DATE)
-                .lastModifiedBy(LAST_MODIFIED_BY)
-                .lastModifiedDate(LAST_MODIFIED_DATE)
+                .version(AuditableEntityTests.VERSION)
+                .createdBy(AuditableEntityTests.CREATED_BY)
+                .createdDate(AuditableEntityTests.CREATED_DATE)
+                .lastModifiedBy(AuditableEntityTests.LAST_MODIFIED_BY)
+                .lastModifiedDate(AuditableEntityTests.LAST_MODIFIED_DATE)
                 .firstName(FIRST_NAME)
                 .lastName(LAST_NAME)
                 .build();
@@ -58,11 +57,11 @@ public class UserTests extends BaseXmlTests<User> {
     @Override
     public void assertObject(User object) {
         assertNotNull(object);
-        assertEquals(VERSION, object.getVersion());
-        assertEquals(CREATED_BY, object.getCreatedBy());
-        assertEquals(CREATED_DATE, object.getCreatedDate());
-        assertEquals(LAST_MODIFIED_BY, object.getLastModifiedBy());
-        assertEquals(LAST_MODIFIED_DATE, object.getLastModifiedDate());
+        assertEquals(AuditableEntityTests.VERSION, object.getVersion());
+        assertEquals(AuditableEntityTests.CREATED_BY, object.getCreatedBy());
+        assertEquals(AuditableEntityTests.CREATED_DATE, object.getCreatedDate());
+        assertEquals(AuditableEntityTests.LAST_MODIFIED_BY, object.getLastModifiedBy());
+        assertEquals(AuditableEntityTests.LAST_MODIFIED_DATE, object.getLastModifiedDate());
         assertEquals(FIRST_NAME, object.getFirstName());
         assertEquals(LAST_NAME, object.getLastName());
     }
@@ -77,7 +76,7 @@ public class UserTests extends BaseXmlTests<User> {
         User user = User.builder()
                 .createdDate(null)
                 .lastModifiedDate(null)
-                .lastModifiedBy(LAST_MODIFIED_BY)
+                .lastModifiedBy(AuditableEntityTests.LAST_MODIFIED_BY)
                 .firstName("")
                 .build();
         assertEquals(

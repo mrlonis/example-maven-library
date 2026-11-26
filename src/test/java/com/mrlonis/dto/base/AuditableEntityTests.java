@@ -11,11 +11,11 @@ import lombok.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
 public class AuditableEntityTests extends BaseXmlTests<AuditableEntityTests.TestAuditableEntity> {
-    private static final long VERSION = 2;
-    private static final String CREATED_BY = "creator";
-    private static final ZonedDateTime CREATED_DATE = ZonedDateTime.of(2026, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
-    private static final String LAST_MODIFIED_BY = "editor";
-    private static final ZonedDateTime LAST_MODIFIED_DATE = ZonedDateTime.of(2026, 1, 2, 2, 2, 2, 2, ZoneOffset.UTC);
+    public static final long VERSION = 2;
+    public static final String CREATED_BY = "creator";
+    public static final ZonedDateTime CREATED_DATE = ZonedDateTime.of(2026, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
+    public static final String LAST_MODIFIED_BY = "editor";
+    public static final ZonedDateTime LAST_MODIFIED_DATE = ZonedDateTime.of(2026, 1, 2, 2, 2, 2, 2, ZoneOffset.UTC);
 
     @SuperBuilder
     @Jacksonized

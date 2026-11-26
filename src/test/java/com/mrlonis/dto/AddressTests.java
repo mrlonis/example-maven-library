@@ -3,17 +3,11 @@ package com.mrlonis.dto;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import com.mrlonis.dto.base.AuditableEntityTests;
 import com.mrlonis.enums.AddressType;
 import com.mrlonis.test.BaseXmlTests;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 
 public class AddressTests extends BaseXmlTests<Address> {
-    private static final long VERSION = 2;
-    private static final String CREATED_BY = "creator";
-    private static final ZonedDateTime CREATED_DATE = ZonedDateTime.of(2026, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
-    private static final String LAST_MODIFIED_BY = "editor";
-    private static final ZonedDateTime LAST_MODIFIED_DATE = ZonedDateTime.of(2026, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
     private static final String STREET1 = "123 Main St";
     private static final String STREET2 = "Apt 4B";
     private static final String CITY = "Anytown";
@@ -24,10 +18,12 @@ public class AddressTests extends BaseXmlTests<Address> {
 
     @Override
     public String getExpectedXml() {
-        return "<Address><version>" + VERSION + "</version><createdBy>" + CREATED_BY + "</createdBy><createdDate>"
-                + CREATED_DATE
-                + "</createdDate><lastModifiedBy>" + LAST_MODIFIED_BY + "</lastModifiedBy><lastModifiedDate>"
-                + LAST_MODIFIED_DATE
+        return "<Address><version>" + AuditableEntityTests.VERSION + "</version><createdBy>"
+                + AuditableEntityTests.CREATED_BY + "</createdBy><createdDate>"
+                + AuditableEntityTests.CREATED_DATE
+                + "</createdDate><lastModifiedBy>" + AuditableEntityTests.LAST_MODIFIED_BY
+                + "</lastModifiedBy><lastModifiedDate>"
+                + AuditableEntityTests.LAST_MODIFIED_DATE
                 + "</lastModifiedDate><street1>" + STREET1 + "</street1><street2>" + STREET2 + "</street2><city>" + CITY
                 + "</city><state>" + STATE + "</state><zipCode>" + ZIP_CODE + "</zipCode><country>" + COUNTRY
                 + "</country><addressType>" + ADDRESS_TYPE + "</addressType></Address>";
@@ -35,8 +31,10 @@ public class AddressTests extends BaseXmlTests<Address> {
 
     @Override
     public String getExpectedJson() {
-        return "{\"version\":" + VERSION + ",\"createdBy\":\"" + CREATED_BY + "\",\"createdDate\":\"" + CREATED_DATE
-                + "\",\"lastModifiedBy\":\"" + LAST_MODIFIED_BY + "\",\"lastModifiedDate\":\"" + LAST_MODIFIED_DATE
+        return "{\"version\":" + AuditableEntityTests.VERSION + ",\"createdBy\":\"" + AuditableEntityTests.CREATED_BY
+                + "\",\"createdDate\":\"" + AuditableEntityTests.CREATED_DATE
+                + "\",\"lastModifiedBy\":\"" + AuditableEntityTests.LAST_MODIFIED_BY + "\",\"lastModifiedDate\":\""
+                + AuditableEntityTests.LAST_MODIFIED_DATE
                 + "\",\"street1\":\"" + STREET1 + "\",\"street2\":\"" + STREET2 + "\",\"city\":\"" + CITY
                 + "\",\"state\":\"" + STATE + "\",\"zipCode\":\"" + ZIP_CODE + "\",\"country\":\"" + COUNTRY
                 + "\",\"addressType\":\"" + ADDRESS_TYPE + "\"}";
@@ -45,11 +43,11 @@ public class AddressTests extends BaseXmlTests<Address> {
     @Override
     public Address createObject() {
         return Address.builder()
-                .version(VERSION)
-                .createdBy(CREATED_BY)
-                .createdDate(CREATED_DATE)
-                .lastModifiedBy(LAST_MODIFIED_BY)
-                .lastModifiedDate(LAST_MODIFIED_DATE)
+                .version(AuditableEntityTests.VERSION)
+                .createdBy(AuditableEntityTests.CREATED_BY)
+                .createdDate(AuditableEntityTests.CREATED_DATE)
+                .lastModifiedBy(AuditableEntityTests.LAST_MODIFIED_BY)
+                .lastModifiedDate(AuditableEntityTests.LAST_MODIFIED_DATE)
                 .street1(STREET1)
                 .street2(STREET2)
                 .city(CITY)
@@ -63,11 +61,11 @@ public class AddressTests extends BaseXmlTests<Address> {
     @Override
     public void assertObject(Address object) {
         assertNotNull(object);
-        assertEquals(VERSION, object.getVersion());
-        assertEquals(CREATED_BY, object.getCreatedBy());
-        assertEquals(CREATED_DATE, object.getCreatedDate());
-        assertEquals(LAST_MODIFIED_BY, object.getLastModifiedBy());
-        assertEquals(LAST_MODIFIED_DATE, object.getLastModifiedDate());
+        assertEquals(AuditableEntityTests.VERSION, object.getVersion());
+        assertEquals(AuditableEntityTests.CREATED_BY, object.getCreatedBy());
+        assertEquals(AuditableEntityTests.CREATED_DATE, object.getCreatedDate());
+        assertEquals(AuditableEntityTests.LAST_MODIFIED_BY, object.getLastModifiedBy());
+        assertEquals(AuditableEntityTests.LAST_MODIFIED_DATE, object.getLastModifiedDate());
         assertEquals(STREET1, object.getStreet1());
         assertEquals(STREET2, object.getStreet2());
         assertEquals(CITY, object.getCity());
